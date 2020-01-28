@@ -1,12 +1,22 @@
 import { connect } from "react-redux"
 import MapComp from "../components/Map";
+import { makeSuggestion } from "../actions";
+import { gameState } from "../reducers";
 
-
-const mapDispatchToProps = (dispatch: any) => {
+const mapStateToProps = (state: gameState) => {
     return {
+        isQuestion: state.isQuestion
     }
 }
 
-let MapCont = connect(null,mapDispatchToProps)(MapComp)
+const mapDispatchToProps = (dispatch: any) => {
+    return {
+        onSubmit: () => {
+            dispatch(makeSuggestion())
+        }
+    }
+}
+
+let MapCont = connect(mapStateToProps,mapDispatchToProps)(MapComp)
 
 export default MapCont;

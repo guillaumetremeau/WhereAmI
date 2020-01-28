@@ -20,10 +20,7 @@ const mapDispatchToProps = (dispatch: any) => {
     return {
         onSubmit: () => {
             dispatch(newGame())
-        },
-        isEnd: false,
-        points: 0,
-        distance: 0
+        }
     }
 }
 
