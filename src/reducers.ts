@@ -20,6 +20,7 @@ const initialState: gameState = {
 }
 
 const suggestion = (state: gameState, action: any) => {
+    if(state == null) return initialState;
     switch (action.type) {
         case MAKE_SUGGESTION:
             // state.suggestedLocation = action.location;
@@ -31,6 +32,7 @@ const suggestion = (state: gameState, action: any) => {
 }
 
 const score = (state:gameState, action: any) => {
+    if(state == null) return initialState;
     switch (action.type) {
         case NEXT_LOCATION:
             state.score += action.score;
