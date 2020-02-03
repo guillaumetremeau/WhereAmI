@@ -1,15 +1,19 @@
 import React from 'react'
 import { stateId as stateIdEnum } from '../reducers/gameState';
+import { ConnectedProps } from 'react-redux';
+import { connector } from '../containers/Map';
 
-let MapComp = ({stateId, isQuestion, onSubmit}:{stateId: stateIdEnum, isQuestion: boolean,onSubmit:any}) => {
-    if (stateId === stateIdEnum.RUNNING) {
-        if (isQuestion) {
+type Props = ConnectedProps<typeof connector>
+
+let MapComp = (props: Props) => {
+    if (props.stateId === stateIdEnum.RUNNING) {
+        if (props.isQuestion) {
             return (
                 <div>
                     Map
                     <form onSubmit={e => {
                             e.preventDefault();
-                            onSubmit();
+                            props.onSubmit();
                         }}>
                         <button type="submit">Make Suggestion</button>
                     </form>

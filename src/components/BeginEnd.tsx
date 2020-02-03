@@ -1,28 +1,32 @@
 import React from 'react';
 import { stateId  as stateIdEnum} from '../reducers/gameState';
+import { ConnectedProps } from 'react-redux';
+import { connector } from '../containers/BeginEnd';
 
-let BeginEnd = ({stateId, points, distance, onSubmit}:{onSubmit: any, stateId: stateIdEnum, points: number, distance: number}) => {
-    if (stateId === stateIdEnum.END) {
+type Props = ConnectedProps<typeof connector>
+
+let BeginEnd = (props: Props) => {
+    if (props.stateId === stateIdEnum.END) {
         return (
             <div>
                 <p>Congratulation!!</p>
-                <p>You earned {points} points!</p>
-                <p>Cumulated distance: {distance} km</p>
+                <p>You earned {props.points} points!</p>
+                <p>Cumulated distance: {props.distance} km</p>
                 <form onSubmit={e => {
                         e.preventDefault();
-                        onSubmit();
+                        props.onSubmit();
                     }}>
                     <button type="submit">New Game</button>
                 </form>
             </div>
         )
-    } else if (stateId === stateIdEnum.BEGIN) {
+    } else if (props.stateId === stateIdEnum.BEGIN) {
         return (
             <div>
                 <p>Do you want to start a new game?</p>
                 <form onSubmit={e => {
                         e.preventDefault();
-                        onSubmit();
+                        props.onSubmit();
                     }}>
                     <button type="submit">New Game</button>
                 </form>

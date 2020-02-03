@@ -1,11 +1,10 @@
 import { newGame } from "../actions/index"
 import { connect } from "react-redux"
 import BeginEnd from "../components/BeginEnd"
-import { gameState } from "../reducers/gameState"
-import { score } from "../reducers/score"
+import { RootState } from "../reducers"
 
 
-const mapStateToProps = (state: {gameState:gameState, score: score}) => {
+const mapStateToProps = (state: RootState) => {
     return {
         stateId: state.gameState.stateId,
         points: state.score.score,
@@ -21,6 +20,6 @@ const mapDispatchToProps = (dispatch: any) => {
     }
 }
 
-let BeginEndCont = connect(mapStateToProps,mapDispatchToProps)(BeginEnd)
+export const connector = connect(mapStateToProps,mapDispatchToProps)
 
-export default BeginEndCont;
+export default connector(BeginEnd);

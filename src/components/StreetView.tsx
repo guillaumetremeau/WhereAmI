@@ -1,8 +1,12 @@
 import React from 'react'
 import { stateId as stateIdEnum } from '../reducers/gameState';
+import { ConnectedProps } from 'react-redux';
+import { connector } from '../containers/StreetView';
 
-let StreetView = ({stateId}:{stateId:stateIdEnum}) => {
-    if(stateId === stateIdEnum.RUNNING){
+type Props = ConnectedProps<typeof connector>
+
+let StreetView = (props: Props) => {
+    if(props.stateId === stateIdEnum.RUNNING){
         return (
             <div>
                 StreetView

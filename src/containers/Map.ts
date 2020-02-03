@@ -1,9 +1,9 @@
 import { connect } from "react-redux"
 import MapComp from "../components/Map";
 import { makeSuggestion } from "../actions/index";
-import { gameState } from "../reducers/gameState";
+import { RootState } from "../reducers";
 
-const mapStateToProps = (state: {gameState: gameState}) => {
+const mapStateToProps = (state: RootState) => {
     return {
         stateId: state.gameState.stateId,
         isQuestion: state.gameState.isQuestion
@@ -18,6 +18,6 @@ const mapDispatchToProps = (dispatch: any) => {
     }
 }
 
-let MapCont = connect(mapStateToProps,mapDispatchToProps)(MapComp)
+export const connector = connect(mapStateToProps,mapDispatchToProps)
 
-export default MapCont;
+export default connector(MapComp);

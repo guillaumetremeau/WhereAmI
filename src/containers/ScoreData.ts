@@ -1,15 +1,13 @@
 import { connect } from "react-redux";
 import ScoreData from "../components/ScoreData";
 import { nextLocation } from "../actions/index";
-import { gameState } from "../reducers/gameState";
-import { score } from "../reducers/score";
+import { RootState } from "../reducers";
 
-const mapStateToProps = (state: {gameState:gameState, score: score}) => {
+const mapStateToProps = (state: RootState) => {
     return {
         stateId: state.gameState.stateId,
         isQuestion: state.gameState.isQuestion,
-        km: state.score.totalKm,
-        points: state.score.score,
+        score: state.score,
         step: state.gameState.step,
     }
 }
@@ -22,6 +20,6 @@ const mapDispatchToProps = (dispatch: any) => {
     }
 }
 
-let ScoreDataCont = connect(mapStateToProps,mapDispatchToProps)(ScoreData)
+export const connector = connect(mapStateToProps,mapDispatchToProps)
 
-export default ScoreDataCont;
+export default connector(ScoreData);
