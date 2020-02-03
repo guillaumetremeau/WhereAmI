@@ -1,11 +1,12 @@
 import { connect } from "react-redux"
 import MapComp from "../components/Map";
-import { makeSuggestion } from "../actions";
-import { gameState } from "../reducers";
+import { makeSuggestion } from "../actions/index";
+import { gameState } from "../reducers/gameState";
 
-const mapStateToProps = (state: gameState) => {
+const mapStateToProps = (state: {gameState: gameState}) => {
     return {
-        isQuestion: state.isQuestion
+        stateId: state.gameState.stateId,
+        isQuestion: state.gameState.isQuestion
     }
 }
 

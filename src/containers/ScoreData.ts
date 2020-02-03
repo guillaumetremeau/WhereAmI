@@ -1,21 +1,23 @@
-import { connect } from "react-redux"
-import { gameState } from "../reducers";
+import { connect } from "react-redux";
 import ScoreData from "../components/ScoreData";
-import { nextLocation } from "../actions";
+import { nextLocation } from "../actions/index";
+import { gameState } from "../reducers/gameState";
+import { score } from "../reducers/score";
 
-const mapStateToProps = (state: gameState) => {
+const mapStateToProps = (state: {gameState:gameState, score: score}) => {
     return {
-        isQuestion: state.isQuestion,
-        km: state.totalKm,
-        points: state.score,
-        step: state.step,
+        stateId: state.gameState.stateId,
+        isQuestion: state.gameState.isQuestion,
+        km: state.score.totalKm,
+        points: state.score.score,
+        step: state.gameState.step,
     }
 }
 
 const mapDispatchToProps = (dispatch: any) => {
     return {
         onSubmit: () => {
-            dispatch(nextLocation(12,12))
+            dispatch(nextLocation(2,12))
         }
     }
 }

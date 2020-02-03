@@ -1,26 +1,33 @@
-import React from 'react'
+import React from 'react';
+import { stateId  as stateIdEnum} from '../reducers/gameState';
 
-let BeginEnd = ({isEnd, points, distance, onSubmit}:{onSubmit: any, isEnd: boolean, points: number, distance: number}) => {
-    if (isEnd) {
+let BeginEnd = ({stateId, points, distance, onSubmit}:{onSubmit: any, stateId: stateIdEnum, points: number, distance: number}) => {
+    if (stateId === stateIdEnum.END) {
         return (
             <div>
                 <p>Congratulation!!</p>
                 <p>You earned {points} points!</p>
                 <p>Cumulated distance: {distance} km</p>
-                <form action="NEW_GAME" onSubmit={onSubmit()}>
+                <form onSubmit={e => {
+                        e.preventDefault();
+                        onSubmit();
+                    }}>
                     <button type="submit">New Game</button>
                 </form>
             </div>
         )
-    } else {
+    } else if (stateId === stateIdEnum.BEGIN) {
         return (
             <div>
                 <p>Do you want to start a new game?</p>
-                <form action="NEW_GAME" onSubmit={onSubmit()}>
+                <form onSubmit={e => {
+                        e.preventDefault();
+                        onSubmit();
+                    }}>
                     <button type="submit">New Game</button>
                 </form>
             </div>
         )
-    }
+    } else return null;
 }
 export default BeginEnd;

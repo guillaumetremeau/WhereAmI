@@ -1,18 +1,15 @@
-import { newGame } from "../actions"
+import { newGame } from "../actions/index"
 import { connect } from "react-redux"
 import BeginEnd from "../components/BeginEnd"
-import { gameState } from "../reducers"
+import { gameState } from "../reducers/gameState"
+import { score } from "../reducers/score"
 
 
-const mapStateToProps = (state: gameState) => {
-    let isEnd = false;
-    if (state.step >= state.maxStep) {
-        isEnd = true;
-    }
+const mapStateToProps = (state: {gameState:gameState, score: score}) => {
     return {
-        isEnd: isEnd,
-        points: state.score,
-        distance: state.totalKm
+        stateId: state.gameState.stateId,
+        points: state.score.score,
+        distance: state.score.totalKm
     }
 }
 
