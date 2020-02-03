@@ -1,13 +1,20 @@
 import { connect } from "react-redux"
 import StreetView from "../components/StreetView";
 import { gameState } from "../reducers/gameState";
+import { score } from "../reducers/score";
 
-const mapStateToProps = (state: {gameState:gameState}) => {
+const mapStateToProps = (state: {gameState:gameState, score: score}) => {
     return {
         stateId: state.gameState.stateId
     }
 }
 
-let StreetViewCont = connect(mapStateToProps,null)(StreetView)
+const mapDispatchToProps = (dispatch: any) => {
+    return {
+
+    }
+}
+
+let StreetViewCont = connect(mapStateToProps,mapDispatchToProps)(StreetView)
 
 export default StreetViewCont;
