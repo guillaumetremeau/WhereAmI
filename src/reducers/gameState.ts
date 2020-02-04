@@ -20,23 +20,29 @@ const initialState: gameState = {
     step: 1
 }
 
-const gameState = (state:gameState = initialState, action: any) => {
+const gameState = (state:gameState = initialState, action: any): gameState => {
     switch (action.type) {
         case MAKE_SUGGESTION:
             state.isQuestion = false;
-            return state;
+            return {
+                stateId: state.stateId,
+                isQuestion: false,
+                step: state.step
+            };
         case NEXT_LOCATION:
-            state.isQuestion = true;
-            if(state.step >= MAX_STEP) {
-                state.stateId = stateId.END
-            } else {
-                state.step++;
-            }
-            return state;
+            return {
+                stateId: (state.step >= MAX_STEP) ? stateId.END: state.stateId,
+                step: (state.step >= MAX_STEP) ? state.step : state.step + 1,
+                isQuestion: true
+            };
         case NEW_GAME:
             state = initialState;
             state.stateId = stateId.RUNNING;
-            return state;
+            return {
+                stateId: stateId.RUNNING,
+                isQuestion: true,
+                step: 1
+            };
         default:
             return state;
     }

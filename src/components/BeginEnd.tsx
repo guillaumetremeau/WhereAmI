@@ -5,7 +5,8 @@ import { connector } from '../containers/BeginEnd';
 
 type Props = ConnectedProps<typeof connector>
 
-let BeginEnd = (props: Props) => {
+const BeginEnd = (props: Props) => {
+    console.log("render BeginEnd component");
     if (props.stateId === stateIdEnum.END) {
         return (
             <div>
@@ -34,4 +35,5 @@ let BeginEnd = (props: Props) => {
         )
     } else return null;
 }
+
 export default BeginEnd;

@@ -13,7 +13,7 @@ const mapStateToProps = (state: RootState) => {
 const mapDispatchToProps = (dispatch: any) => {
     return {
         onSubmit: () => {
-            dispatch(makeSuggestion())
+            dispatch(makeSuggestion(5,64))
         }
     }
 }

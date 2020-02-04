@@ -5,17 +5,18 @@ import StreetViewCont from './containers/StreetView';
 import MapCont from './containers/Map';
 import ScoreDataCont from './containers/ScoreData';
 
-const App: React.FC = () => {
+function App() {
+  console.log("render App");
   return (
     <div className="App">
-      <header className="App-header">
-        <BeginEndCont />
-        <StreetViewCont />
-        <MapCont />
-        <ScoreDataCont />
-      </header>
-    </div>
-  );
+        <header className="App-header">
+          <BeginEndCont />
+          <StreetViewCont />
+          <MapCont />
+          <ScoreDataCont />
+        </header>
+      </div>
+  )
 }
 
 export default App;

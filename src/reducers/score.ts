@@ -1,4 +1,4 @@
-import { NEXT_LOCATION, NEW_GAME } from "../actions";
+import { NEW_GAME, MAKE_SUGGESTION } from "../actions";
 
 export type score = {
     score: number;
@@ -10,14 +10,18 @@ const initialState: score = {
     totalKm: 0
 }
 
-const score = (state:score = initialState, action: any) => {
+const score = (state:score = initialState, action: any): score => {
     switch (action.type) {
-        case NEXT_LOCATION:
-            state.score += action.score;
-            state.totalKm += action.km;
-            return state;
+        case MAKE_SUGGESTION:
+            return {
+                score: state.score + action.points,
+                totalKm: state.totalKm + action.km
+            };
         case NEW_GAME:
-            return initialState
+            return {
+                score: 0,
+                totalKm: 0
+            }
         default:
             return state;
     }

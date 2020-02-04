@@ -9,13 +9,14 @@ const mapStateToProps = (state: RootState) => {
         isQuestion: state.gameState.isQuestion,
         score: state.score,
         step: state.gameState.step,
+        setScore: state.setScore
     }
 }
 
 const mapDispatchToProps = (dispatch: any) => {
     return {
         onSubmit: () => {
-            dispatch(nextLocation(2,12))
+            dispatch(nextLocation())
         }
     }
 }
