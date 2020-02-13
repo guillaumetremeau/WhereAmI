@@ -8,12 +8,14 @@ type Props = ConnectedProps<typeof connector>
 
 const googleApiKey = 'AIzaSyAitQDgXUmmYoaN_tcDgSFQmkCFUcNTUnw'
 const streetViewPanoramaOptions = {
-    position: {lat: 46.9171876, lng: 17.8951832},
-    addressControl: false
+    addressControl: false, // Delete possibility to access the map
+    showRoadLabels: false // Delete the labels on the road
 };
 
 let StreetView = (props: Props) => {
     if(props.stateId === stateIdEnum.RUNNING){
+        console.log("view:",props.lat, props.lng)
+        const locationOptions = {position: {lat: props.lat, lng:  props.lng}}
         return (
             <div style={{
                 width: '800px',
@@ -21,8 +23,11 @@ let StreetView = (props: Props) => {
                 backgroundColor: '#eeeeee'
             }}>
                 <ReactStreetview
+                    key={new Date().getTime()}// Update the map each time new prop is provided
                     apiKey={googleApiKey}
-                    streetViewPanoramaOptions={streetViewPanoramaOptions}
+                    streetViewPanoramaOptions={
+                        {...streetViewPanoramaOptions,...locationOptions}
+                    }
                 />
             </div>
         )

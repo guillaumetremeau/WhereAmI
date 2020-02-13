@@ -1,4 +1,4 @@
-import { MAKE_SUGGESTION, NEXT_LOCATION, NEW_GAME } from "../actions";
+import { MAKE_SUGGESTION, NEW_GAME_SUCCEEDED, NEXT_LOCATION_SUCCEEDED } from "../actions";
 
 export const MAX_STEP = 5;
 
@@ -29,13 +29,13 @@ const gameState = (state:gameState = initialState, action: any): gameState => {
                 isQuestion: false,
                 step: state.step
             };
-        case NEXT_LOCATION:
+        case NEXT_LOCATION_SUCCEEDED:
             return {
                 stateId: (state.step >= MAX_STEP) ? stateId.END: state.stateId,
                 step: (state.step >= MAX_STEP) ? state.step : state.step + 1,
                 isQuestion: true
             };
-        case NEW_GAME:
+        case NEW_GAME_SUCCEEDED:
             state = initialState;
             state.stateId = stateId.RUNNING;
             return {
