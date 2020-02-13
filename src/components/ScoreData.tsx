@@ -18,7 +18,7 @@ let ScoreData = (props: Props) => {
             )    
         } else {
             return (
-                <div>
+                <div id="streetView">
                     <p>Set {props.step} out of {MAX_STEP}</p>
                     <p>You are {props.setScore.points} km far away from your suggestion</p>
                     <p>I give you {props.setScore.km} points</p>
@@ -26,8 +26,9 @@ let ScoreData = (props: Props) => {
                             e.preventDefault();
                             props.onSubmit();
                         }}>
-                        <button type="submit">{(props.step == MAX_STEP) ? "See your result":"Next Location"}</button>
+                        <button type="submit">{(props.step === MAX_STEP) ? "See your result":"Next Location"}</button>
                     </form>
+                    <p>Here is the list of places close to this location:</p>
                 </div>
             )
         }  

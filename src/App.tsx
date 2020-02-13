@@ -6,7 +6,6 @@ import MapCont from './containers/Map';
 import ScoreDataCont from './containers/ScoreData';
 
 function App() {
-  console.log("render App");
   return (
     <div className="App">
         <header className="App-header">
