@@ -1,5 +1,5 @@
 import { put, takeEvery } from 'redux-saga/effects'
-import { NEXT_LOCATION, NEW_GAME, NEW_GAME_SUCCEEDED, NEW_GAME_FAILED, NEXT_LOCATION_FAILED, NEXT_LOCATION_SUCCEEDED } from '.';
+import { NEXT_LOCATION, NEW_GAME, NEW_GAME_SUCCEEDED, NEW_GAME_FAILED, NEXT_LOCATION_FAILED, NEXT_LOCATION_SUCCEEDED, MAKE_SUGGESTION, MAKE_SUGGESTION_SUCCEEDED, MAKE_SUGGESTION_FAILED } from '.';
 
 // ------------------------------------------
 // Try Random location using google api
@@ -53,24 +53,44 @@ async function newLocation() {
     }
 }
 
+// -----------------------------------
+// MAKE SUGGESTION - Calculate distance and points
+const calculateDistance = () => {
+    return 5;
+}
+
+const inferPoints = (distance: number) => {
+    return distance * 2;
+}
+
 // ------------------------------------
 // Saga Actions
 
 function* newGame() {
-   try {
-      const latLng = yield newLocation();
-      yield put({type: NEW_GAME_SUCCEEDED, ...latLng});
-   } catch (e) {
-      yield put({type: NEW_GAME_FAILED, message: e.message});
-   }
+    try {
+        const latLng = yield newLocation();
+        yield put({type: NEW_GAME_SUCCEEDED, ...latLng});
+    } catch (e) {
+        yield put({type: NEW_GAME_FAILED, message: e.message});
+    }
 }
 
 function* nextLocation() {
     try {
         const latLng = yield newLocation();
-       yield put({type: NEXT_LOCATION_SUCCEEDED, ...latLng});
+        yield put({type: NEXT_LOCATION_SUCCEEDED, ...latLng});
     } catch (e) {
-       yield put({type: NEXT_LOCATION_FAILED, message: e.message});
+        yield put({type: NEXT_LOCATION_FAILED, message: e.message});
+    }
+ }
+
+ function* makeSuggestion(action:any) {
+    try {
+        const distance = yield calculateDistance();
+        const points = yield inferPoints(distance);
+        yield put({type: MAKE_SUGGESTION_SUCCEEDED, km: distance, points: points, suggestedLat: action.lat, suggestedLng: action.lng})
+    } catch (e) {
+        yield put({type: MAKE_SUGGESTION_FAILED, message: e.message});
     }
  }
 
@@ -82,6 +102,7 @@ function* nextLocation() {
 function* mySaga() {
     yield takeEvery(NEW_GAME, newGame);
     yield takeEvery(NEXT_LOCATION, nextLocation);
+    yield takeEvery(MAKE_SUGGESTION, makeSuggestion);
 }
 
 export default mySaga;

@@ -14,7 +14,6 @@ const streetViewPanoramaOptions = {
 
 let StreetView = (props: Props) => {
     if(props.stateId === stateIdEnum.RUNNING){
-        console.log("view:",props.lat, props.lng)
         const locationOptions = {position: {lat: props.lat, lng:  props.lng}}
         return (
             <div style={{
@@ -23,7 +22,7 @@ let StreetView = (props: Props) => {
                 backgroundColor: '#eeeeee'
             }}>
                 <ReactStreetview
-                    key={new Date().getTime()}// Update the map each time new prop is provided
+                    key={new Date().getTime()}// Update the streetView each time new prop is provided
                     apiKey={googleApiKey}
                     streetViewPanoramaOptions={
                         {...streetViewPanoramaOptions,...locationOptions}

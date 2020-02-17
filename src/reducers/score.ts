@@ -1,4 +1,4 @@
-import { MAKE_SUGGESTION, NEW_GAME_SUCCEEDED } from "../actions";
+import { NEW_GAME_SUCCEEDED, MAKE_SUGGESTION_SUCCEEDED } from "../actions";
 
 export type score = {
     score: number;
@@ -12,7 +12,7 @@ const initialState: score = {
 
 const score = (state:score = initialState, action: any): score => {
     switch (action.type) {
-        case MAKE_SUGGESTION:
+        case MAKE_SUGGESTION_SUCCEEDED:
             return {
                 score: state.score + action.points,
                 totalKm: state.totalKm + action.km

@@ -20,8 +20,8 @@ let ScoreData = (props: Props) => {
             return (
                 <div id="streetView">
                     <p>Set {props.step} out of {MAX_STEP}</p>
-                    <p>You are {props.setScore.points} km far away from your suggestion</p>
-                    <p>I give you {props.setScore.km} points</p>
+                    <p>You are {props.setScore.km} km far away from your suggestion</p>
+                    <p>I give you {props.setScore.points} points</p>
                     <form onSubmit={e => {
                             e.preventDefault();
                             props.onSubmit();
