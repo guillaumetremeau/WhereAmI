@@ -8,7 +8,7 @@ type Props = ConnectedProps<typeof connector>
 const BeginEnd = (props: Props) => {
     if (props.stateId === stateIdEnum.END) {
         return (
-            <div>
+            <div className='column'>
                 <p>Congratulation!!</p>
                 <p>You earned {props.points} points!</p>
                 <p>Cumulated distance: {props.distance} km</p>

@@ -42,51 +42,55 @@ const handleApiLoadedDistanceMap = (map:any, initialLat: number, initialLng: num
         map: map,
         strokeColor: '#FF0000',
         strokeOpacity: 1.0,
-        strokeWeight: 2
+        strokeWeight: 2,
+        geodesic: true
     })
 }
 let MapComp = (props: Props) => {
     if (props.stateId === stateIdEnum.RUNNING) {
         if (props.isQuestion) {
             return (
-                <div style={{ height: '60vh', width: '70%', margin: '10px' }}>
-                    <div style={{height: '80%', width: '100%'}}>
-                        <GoogleMapReact 
-                            key={new Date().getTime()}// Update the map each time new prop is provided
-                            bootstrapURLKeys={{ key: 'AIzaSyAitQDgXUmmYoaN_tcDgSFQmkCFUcNTUnw' }}
-                            defaultCenter={{lat: 0, lng: 0}}
-                            defaultZoom={1}
-                            onGoogleApiLoaded={({ map }) => handleApiLoadedSuggestionMap(map)}
-                            yesIWantToUseGoogleMapApiInternals={true}
-                        />
+                <div className='column'>
+                    <div className='component' id='Map'>
+                        <div style={{height: '90%', width: '100%'}}>
+                            <GoogleMapReact 
+                                key={new Date().getTime()}// Update the map each time new prop is provided
+                                bootstrapURLKeys={{ key: 'AIzaSyAitQDgXUmmYoaN_tcDgSFQmkCFUcNTUnw' }}
+                                defaultCenter={{lat: 0, lng: 0}}
+                                defaultZoom={1}
+                                onGoogleApiLoaded={({ map }) => handleApiLoadedSuggestionMap(map)}
+                                yesIWantToUseGoogleMapApiInternals={true}
+                            />
+                        </div>
+                        <form style={{height: '10%'}} onSubmit={e => {
+                                    e.preventDefault();
+                                    if (marker) {
+                                        let position: google.maps.LatLng | null | undefined = marker.getPosition();
+                                        if (position) props.onSubmit(position)
+                                        marker.setMap(null);
+                                        marker = null;
+                                    }
+                                    
+                                }}>
+                                <button type="submit">Make Suggestion</button>
+                        </form>
                     </div>
-                    <form onSubmit={e => {
-                                e.preventDefault();
-                                if (marker) {
-                                    let position: google.maps.LatLng | null | undefined = marker.getPosition();
-                                    if (position) props.onSubmit(position)
-                                    marker.setMap(null);
-                                    marker = null;
-                                }
-                                
-                            }}>
-                            <button type="submit">Make Suggestion</button>
-                    </form>
                 </div>
-                
             )
         } else {
             return (
-                <div style={{ height: '60vh', width: '70%', margin: '10px' }}>
-                    <div style={{height: '100%', width: '100%'}}>
-                        <GoogleMapReact 
-                            key={new Date().getTime()}// Update the map each time new prop is provided
-                            bootstrapURLKeys={{ key: 'AIzaSyAitQDgXUmmYoaN_tcDgSFQmkCFUcNTUnw' }}
-                            defaultCenter={{lat: props.initialLat, lng: props.initialLng}}
-                            defaultZoom={1}
-                            onGoogleApiLoaded={({ map }) => handleApiLoadedDistanceMap(map, props.initialLat, props.initialLng, props.suggestedLat, props.suggestedLng)}
-                            yesIWantToUseGoogleMapApiInternals={true}
-                        />
+                <div className='column'>
+                    <div className='component' id='Map'>
+                        <div style={{height: '100%', width: '100%'}}>
+                            <GoogleMapReact 
+                                key={new Date().getTime()}// Update the map each time new prop is provided
+                                bootstrapURLKeys={{ key: 'AIzaSyAitQDgXUmmYoaN_tcDgSFQmkCFUcNTUnw' }}
+                                defaultCenter={{lat: props.initialLat, lng: props.initialLng}}
+                                defaultZoom={1}
+                                onGoogleApiLoaded={({ map }) => handleApiLoadedDistanceMap(map, props.initialLat, props.initialLng, props.suggestedLat, props.suggestedLng)}
+                                yesIWantToUseGoogleMapApiInternals={true}
+                            />
+                        </div>
                     </div>
                 </div>
             )

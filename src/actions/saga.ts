@@ -1,5 +1,6 @@
-import { put, takeEvery } from 'redux-saga/effects'
+import { put, takeEvery, select } from 'redux-saga/effects'
 import { NEXT_LOCATION, NEW_GAME, NEW_GAME_SUCCEEDED, NEW_GAME_FAILED, NEXT_LOCATION_FAILED, NEXT_LOCATION_SUCCEEDED, MAKE_SUGGESTION, MAKE_SUGGESTION_SUCCEEDED, MAKE_SUGGESTION_FAILED } from '.';
+import { getInitialLat, getInitialLng } from '../reducers';
 
 // ------------------------------------------
 // Try Random location using google api
@@ -7,8 +8,8 @@ import { NEXT_LOCATION, NEW_GAME, NEW_GAME_SUCCEEDED, NEW_GAME_FAILED, NEXT_LOCA
 let div: any = document.getElementById("root");
 
 const TryRandomLocation = () => {
-    var lat = (Math.random() * 90) - 90;
-    var lng = (Math.random() * 180) - 180;
+    var lat = (Math.random() * (180 - -180) - 180);
+    var lng = (Math.random() * (180 - -180) - 180);
     var sv = new google.maps.StreetViewService();
 
 
@@ -55,13 +56,33 @@ async function newLocation() {
 
 // -----------------------------------
 // MAKE SUGGESTION - Calculate distance and points
-const calculateDistance = () => {
-    return 5;
+const calculateDistance = (initialLat: number, initialLng: number, suggestedLat: number, suggestedLng: number) => {
+    let distance = google.maps.geometry.spherical.computeDistanceBetween(
+        new google.maps.LatLng({lat: initialLat, lng: initialLng}),
+        new google.maps.LatLng({lat: suggestedLat, lng: suggestedLng})
+    );
+    distance /= 1000; // from meters to km
+    return distance;
 }
 
-const inferPoints = (distance: number) => {
-    return distance * 2;
+// distance in km
+const inferPoints = (distance: number) => { // from 0 to 10 points
+    let points = -1.898038 + (10.11958 - -1.898038)/(1 + Math.pow(distance/952.7294,1.009524)); // Curve build on https://mycurvefit.com/
+    points = Math.round(points * 10) / 10; // Round number with one decimal https://jsperf.com/rounding-methods-in-javascript
+    if (points > 10) points = 10;
+    if (points < 0) points = 0;
+    return points;
 }
+// tests
+/*
+inferPoints(1);
+inferPoints(100);
+inferPoints(200);
+inferPoints(500);
+inferPoints(1000);
+inferPoints(2000);
+inferPoints(5000);
+inferPoints(20000);*/
 
 // ------------------------------------
 // Saga Actions
@@ -86,7 +107,9 @@ function* nextLocation() {
 
  function* makeSuggestion(action:any) {
     try {
-        const distance = yield calculateDistance();
+        const initialLat = yield select(getInitialLat);
+        const initialLng = yield select(getInitialLng);
+        const distance = yield calculateDistance(initialLat, initialLng, action.lat, action.lng);
         const points = yield inferPoints(distance);
         yield put({type: MAKE_SUGGESTION_SUCCEEDED, km: distance, points: points, suggestedLat: action.lat, suggestedLng: action.lng})
     } catch (e) {

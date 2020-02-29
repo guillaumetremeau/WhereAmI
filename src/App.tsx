@@ -1,5 +1,5 @@
 import React from 'react';
-import './App.css';
+import './App.sass';
 import BeginEndCont from './containers/BeginEnd';
 import StreetViewCont from './containers/StreetView';
 import MapCont from './containers/Map';
@@ -10,9 +10,11 @@ function App() {
     <div className="App">
         <header className="App-header">
           <BeginEndCont />
-          <StreetViewCont />
-          <MapCont />
-          <ScoreDataCont />
+          <div className='row'>
+            <StreetViewCont />
+            <MapCont />
+          </div>
+          <ScoreDataCont /> 
         </header>
       </div>
   )

@@ -16,18 +16,16 @@ let StreetView = (props: Props) => {
     if(props.stateId === stateIdEnum.RUNNING){
         const locationOptions = {position: {lat: props.lat, lng:  props.lng}}
         return (
-            <div style={{
-                width: '800px',
-                height: '450px',
-                backgroundColor: '#eeeeee'
-            }}>
-                <ReactStreetview
-                    key={new Date().getTime()}// Update the streetView each time new prop is provided
-                    apiKey={googleApiKey}
-                    streetViewPanoramaOptions={
-                        {...streetViewPanoramaOptions,...locationOptions}
-                    }
-                />
+            <div className='column'>
+                <div className='component' id ='StreetView'>
+                    <ReactStreetview
+                        key={new Date().getTime()}// Update the streetView each time new prop is provided
+                        apiKey={googleApiKey}
+                        streetViewPanoramaOptions={
+                            {...streetViewPanoramaOptions,...locationOptions}
+                        }
+                    />
+                </div>
             </div>
         )
     } else return null;
