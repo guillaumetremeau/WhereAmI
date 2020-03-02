@@ -3,6 +3,7 @@ import { MAX_STEP } from '../reducers/gameState';
 import { stateId as stateIdEnum } from '../reducers/gameState';
 import { connector } from '../containers/ScoreData';
 import { ConnectedProps } from 'react-redux';
+import { buttonLoad } from '../App';
 
 type Props = ConnectedProps<typeof connector>
 
@@ -24,9 +25,13 @@ let ScoreData = (props: Props) => {
                     <p>I give you {props.setScore.points} points</p>
                     <form onSubmit={e => {
                             e.preventDefault();
+                            buttonLoad(document.getElementById('buttonLoad') as HTMLElement);
                             props.onSubmit();
                         }}>
-                        <button type="submit">{(props.step === MAX_STEP) ? "See your result":"Next Location"}</button>
+                        <button id='buttonLoad' type="submit">
+                            <i></i>
+                            {(props.step === MAX_STEP) ? "See your result":"Next Location"}
+                        </button>
                     </form>
                     <p>Here is the list of places close to this location:</p>
                     <p>Here is the list of places close to this location:</p>
