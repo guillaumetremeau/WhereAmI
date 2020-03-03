@@ -3,6 +3,7 @@ import GoogleMapReact from 'google-map-react';
 import { stateId as stateIdEnum } from '../reducers/gameState';
 import { ConnectedProps } from 'react-redux';
 import { connector } from '../containers/Map';
+import { buttonLoad } from '../App';
 
 type Props = ConnectedProps<typeof connector>
 
@@ -45,7 +46,31 @@ const handleApiLoadedDistanceMap = (map:any, initialLat: number, initialLng: num
         strokeWeight: 2,
         geodesic: true
     })
+
+    findNearbyPlaces(map, initialLat, initialLng);
 }
+// Nearby Places
+const findNearbyPlaces = (map: google.maps.Map, lat: number, lng: number) => {
+    const service = new google.maps.places.PlacesService(map);
+    const request = {
+        location: new google.maps.LatLng(lat, lng),
+        radius: 500
+    }
+    console.log('query places')
+    service.nearbySearch(request, callback);
+
+    function callback(results: google.maps.places.PlaceResult[], status: google.maps.places.PlacesServiceStatus) {
+        if (status === google.maps.places.PlacesServiceStatus.OK) {
+            console.log(results)
+          for (var i = 0; i < results.length; i++) {
+
+          }
+        }
+      }
+      
+}
+
+// ------------------- View
 let MapComp = (props: Props) => {
     if (props.stateId === stateIdEnum.RUNNING) {
         if (props.isQuestion) {
@@ -65,6 +90,7 @@ let MapComp = (props: Props) => {
                         <form style={{height: '10%'}} onSubmit={e => {
                                     e.preventDefault();
                                     if (marker) {
+                                        buttonLoad(document.getElementById('buttonLoad') as HTMLElement);
                                         let position: google.maps.LatLng | null | undefined = marker.getPosition();
                                         if (position) props.onSubmit(position)
                                         marker.setMap(null);
@@ -72,7 +98,10 @@ let MapComp = (props: Props) => {
                                     }
                                     
                                 }}>
-                                <button type="submit">Make Suggestion</button>
+                                <button id='buttonLoad' type="submit">
+                                    <i></i>
+                                    Make Suggestion
+                                </button>
                         </form>
                     </div>
                 </div>
