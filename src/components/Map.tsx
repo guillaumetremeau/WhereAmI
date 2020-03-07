@@ -54,19 +54,29 @@ const findNearbyPlaces = (map: google.maps.Map, lat: number, lng: number) => {
     const service = new google.maps.places.PlacesService(map);
     const request = {
         location: new google.maps.LatLng(lat, lng),
-        radius: 500
+        radius: 5000
     }
-    console.log('query places')
     service.nearbySearch(request, callback);
 
     function callback(results: google.maps.places.PlaceResult[], status: google.maps.places.PlacesServiceStatus) {
+        console.log("status", status)
+        console.log("results", results)
         if (status === google.maps.places.PlacesServiceStatus.OK) {
-            console.log(results)
-          for (var i = 0; i < results.length; i++) {
-
-          }
+            const nearbyP = document.getElementById("NearbyP");
+            nearbyP?.insertAdjacentText('afterbegin',"Here is a list of places close to this location:")
+            const nearbyUl = document.getElementById("NearbyUl");
+            for (var i = 0; i < (results.length && 5); i++) {
+                nearbyUl?.insertAdjacentHTML('beforeend',
+                    "<li><a href='https://www.google.com/maps/search/?api=1&query="+
+                    results[i].name+
+                    "&query_place_id="+
+                    results[i].place_id+
+                    "'>"+
+                    results[i].name+
+                    "</a></li>")
+            }
         }
-      }
+    }
       
 }
 

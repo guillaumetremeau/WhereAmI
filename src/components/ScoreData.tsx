@@ -33,15 +33,8 @@ let ScoreData = (props: Props) => {
                             {(props.step === MAX_STEP) ? "See your result":"Next Location"}
                         </button>
                     </form>
-                    <p>Here is the list of places close to this location:</p>
-                    <p>Here is the list of places close to this location:</p>
-                    <p>Here is the list of places close to this location:</p>
-                    <p>Here is the list of places close to this location:</p>
-                    <p>Here is the list of places close to this location:</p>
-                    <p>Here is the list of places close to this location:</p>
-                    <p>Here is the list of places close to this location:</p>
-                    <p>Here is the list of places close to this location:</p>
-                    <p>Here is the list of places close to this location:</p>
+                    <p id='NearbyP'></p>
+                    <ul id='NearbyUl'></ul>
                 </div>
             )
         }  
