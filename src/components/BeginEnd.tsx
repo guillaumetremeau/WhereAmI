@@ -10,9 +10,9 @@ const BeginEnd = (props: Props) => {
     if (props.stateId === stateIdEnum.END) {
         return (
             <div className='column'>
-                <p>Congratulation!!</p>
-                <p>You earned {props.points} points!</p>
-                <p>Cumulated distance: {props.distance.toFixed(1).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')} km</p>
+                <h1>Congratulation!!</h1>
+                <p>You earned <span>{props.points}</span> points!</p>
+                <p>Cumulated distance: <span>{props.distance.toFixed(1).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}</span> km</p>
                 <form onSubmit={e => {
                         e.preventDefault();
                         buttonLoad(document.getElementById('buttonLoad') as HTMLElement);
@@ -28,7 +28,7 @@ const BeginEnd = (props: Props) => {
     } else if (props.stateId === stateIdEnum.BEGIN) {
         return (
             <div>
-                <p>Do you want to start a new game?</p>
+                <h1>Do you want to start a new game?</h1>
                 <form onSubmit={e => {
                         e.preventDefault();
                         buttonLoad(document.getElementById('buttonLoad') as HTMLElement);

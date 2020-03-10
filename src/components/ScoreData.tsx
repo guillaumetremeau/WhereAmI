@@ -12,17 +12,17 @@ let ScoreData = (props: Props) => {
         if (props.isQuestion) {
             return (
                 <div  className='column'>
-                    <p>Set {props.step} out of {MAX_STEP}</p>
-                    <p>Points: {props.score.score}</p>
-                    <p>Total distance: {props.score.totalKm.toFixed(1).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}</p>
+                    <h1>Set <span>{props.step}</span> out of {MAX_STEP}</h1>
+                    <p>Points: <span>{props.score.score}</span></p>
+                    <p>Total distance: <span>{props.score.totalKm.toFixed(1).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}</span></p>
                 </div>
             )    
         } else {
             return (
                 <div className='column'>
-                    <p>Set {props.step} out of {MAX_STEP}</p>
-                    <p>You are {props.setScore.km.toFixed(1).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')} km far away from your suggestion</p>
-                    <p>I give you {props.setScore.points} points</p>
+                    <h1>Set <span>{props.step}</span> out of {MAX_STEP}</h1>
+                    <p>You are <span>{props.setScore.km.toFixed(1).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}</span> km far away from your suggestion</p>
+                    <p>I give you <span>{props.setScore.points}</span> points</p>
                     <form onSubmit={e => {
                             e.preventDefault();
                             buttonLoad(document.getElementById('buttonLoad') as HTMLElement);
@@ -33,8 +33,8 @@ let ScoreData = (props: Props) => {
                             {(props.step === MAX_STEP) ? "See your result":"Next Location"}
                         </button>
                     </form>
-                    <p id='NearbyP'></p>
-                    <ul id='NearbyUl'></ul>
+                    <h2 id='NearbyP'></h2>
+                    <ul className="small" id='NearbyUl'></ul>
                 </div>
             )
         }  
