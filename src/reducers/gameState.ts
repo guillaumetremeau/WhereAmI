@@ -8,6 +8,7 @@ export enum stateId {
     END
 }
 
+// Current state of a Game
 export type gameState = {
     stateId: stateId,
     isQuestion: boolean,
@@ -26,16 +27,17 @@ const gameState = (state:gameState = initialState, action: any): gameState => {
             state.isQuestion = false;
             return {
                 stateId: state.stateId,
-                isQuestion: false,
-                step: state.step
+                isQuestion: false, // go to result state
+                step: state.step 
             };
         case NEXT_LOCATION_SUCCEEDED:
             return {
-                stateId: (state.step >= MAX_STEP) ? stateId.END: state.stateId,
-                step: (state.step >= MAX_STEP) ? state.step : state.step + 1,
-                isQuestion: true
+                stateId: (state.step >= MAX_STEP) ? stateId.END: state.stateId, // End the game if Max step reached
+                step: (state.step >= MAX_STEP) ? state.step : state.step + 1, // next step
+                isQuestion: true // Go to suggestion state
             };
         case NEW_GAME_SUCCEEDED:
+            // Start a new Game
             state = initialState;
             state.stateId = stateId.RUNNING;
             return {

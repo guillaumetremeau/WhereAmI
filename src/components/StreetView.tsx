@@ -14,6 +14,7 @@ const streetViewPanoramaOptions = {
 
 let StreetView = (props: Props) => {
     if(props.stateId === stateIdEnum.RUNNING){
+        // If game is running showing the initial StreetView (random location)
         const locationOptions = {position: {lat: props.lat, lng:  props.lng}}
         return (
             <div className='column'>

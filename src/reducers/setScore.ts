@@ -1,7 +1,7 @@
 import { NEW_GAME_SUCCEEDED, NEXT_LOCATION_SUCCEEDED, MAKE_SUGGESTION_SUCCEEDED } from "../actions"
 
 
-
+// Score of a set (one question/suggestion)
 export type setScore = {
     points: number,
     km: number,
@@ -24,6 +24,7 @@ function setScore (state: setScore = initialState, action: any)  {
     switch (action.type) {
         case NEW_GAME_SUCCEEDED:
         case NEXT_LOCATION_SUCCEEDED:
+            // Initialize score of the set
             return {
                 points: 0,
                 km: 0,
@@ -33,6 +34,7 @@ function setScore (state: setScore = initialState, action: any)  {
                 suggestedLng: 0
             }
         case MAKE_SUGGESTION_SUCCEEDED:
+            // Update setScore with Suggestion data
             return {
                 points: action.points,
                 km: action.km,

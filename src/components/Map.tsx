@@ -11,6 +11,7 @@ type Props = ConnectedProps<typeof connector>
 
 let marker: google.maps.Marker | null;
 
+// Add a marker on the map when click event (remove before if a marker exists)
 const handleApiLoadedSuggestionMap = (map: any) => {
     map.addListener('click', (e: any) => { // Listen onClicks events
         if (marker) marker.setMap(null); // Check if marker is defined, remove if so
@@ -23,21 +24,23 @@ const handleApiLoadedSuggestionMap = (map: any) => {
 }
 
 const handleApiLoadedDistanceMap = (map:any, initialLat: number, initialLng: number, suggestedLat: number, suggestedLng: number) => {
+    // Add initial marker
     let bounds  = new google.maps.LatLngBounds();
     new google.maps.Marker({
         position: {lat: initialLat, lng: initialLng},
         map: map        
     });
     bounds.extend({lat: initialLat, lng: initialLng});
+    // Add suggested marker
     new google.maps.Marker({
         position: {lat: suggestedLat, lng: suggestedLng},
         map: map,
         icon: {url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"}
     });
     bounds.extend({lat: suggestedLat, lng: suggestedLng});
-    map.fitBounds(bounds);       // auto-zoom
-    map.panToBounds(bounds);     // auto-center
-
+    map.fitBounds(bounds);       // auto-zoom with the two markers
+    map.panToBounds(bounds);     // auto-center with the two markers
+    // Show a line (travel distance) between the two marker
     new google.maps.Polyline({
         path: [{lat: initialLat, lng: initialLng},{lat: suggestedLat, lng: suggestedLng}],
         map: map,
@@ -49,19 +52,18 @@ const handleApiLoadedDistanceMap = (map:any, initialLat: number, initialLng: num
 
     findNearbyPlaces(map, initialLat, initialLng);
 }
-// Nearby Places
+// Calculate the 5 nearby Places upon google services and render it
 const findNearbyPlaces = (map: google.maps.Map, lat: number, lng: number) => {
     const service = new google.maps.places.PlacesService(map);
     const request = {
         location: new google.maps.LatLng(lat, lng),
-        radius: 5000
+        radius: 5000 // 5km
     }
     service.nearbySearch(request, callback);
 
     function callback(results: google.maps.places.PlaceResult[], status: google.maps.places.PlacesServiceStatus) {
-        console.log("status", status)
-        console.log("results", results)
         if (status === google.maps.places.PlacesServiceStatus.OK) {
+            // render the results of finded
             const nearbyP = document.getElementById("NearbyP");
             nearbyP?.insertAdjacentText('afterbegin',"Here is a list of places close to this location:")
             const nearbyUl = document.getElementById("NearbyUl");
@@ -83,7 +85,9 @@ const findNearbyPlaces = (map: google.maps.Map, lat: number, lng: number) => {
 // ------------------- View
 let MapComp = (props: Props) => {
     if (props.stateId === stateIdEnum.RUNNING) {
+        // A game is running
         if (props.isQuestion) {
+            // If it has to wait for user input (map suggestion)
             return (
                 <div className='column'>
                     <div className='component' id='Map'>
@@ -117,6 +121,7 @@ let MapComp = (props: Props) => {
                 </div>
             )
         } else {
+            // Result of a suggestion (showing both marker and travel distance on a map)
             return (
                 <div className='column'>
                     <div className='component' id='Map'>

@@ -8,6 +8,7 @@ type Props = ConnectedProps<typeof connector>
 
 const BeginEnd = (props: Props) => {
     if (props.stateId === stateIdEnum.END) {
+        // End page of the game
         return (
             <div className='column'>
                 <h1>Congratulation!!</h1>
@@ -16,7 +17,7 @@ const BeginEnd = (props: Props) => {
                 <form onSubmit={e => {
                         e.preventDefault();
                         buttonLoad(document.getElementById('buttonLoad') as HTMLElement);
-                        props.onSubmit();
+                        props.onSubmit(); // Start new Game
                     }}>
                     <button id='buttonLoad' type="submit">
                         <i></i>
@@ -26,13 +27,14 @@ const BeginEnd = (props: Props) => {
             </div>
         )
     } else if (props.stateId === stateIdEnum.BEGIN) {
+        // Welcome page of the game
         return (
             <div>
                 <h1>Do you want to start a new game?</h1>
                 <form onSubmit={e => {
                         e.preventDefault();
                         buttonLoad(document.getElementById('buttonLoad') as HTMLElement);
-                        props.onSubmit();
+                        props.onSubmit(); // Start new Game
                     }}>
                     <button type="submit" id='buttonLoad'>
                         <i></i>

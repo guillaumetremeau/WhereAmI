@@ -9,7 +9,9 @@ type Props = ConnectedProps<typeof connector>
 
 let ScoreData = (props: Props) => {
     if (props.stateId === stateIdEnum.RUNNING) {
+        // If a game is running
         if (props.isQuestion) {
+            // Showing current state of the game if it is a question
             return (
                 <div  className='column'>
                     <h1>Set <span>{props.step}</span> out of {MAX_STEP}</h1>
@@ -18,6 +20,7 @@ let ScoreData = (props: Props) => {
                 </div>
             )    
         } else {
+            // Showing result of the suggestion and potential Nearby places
             return (
                 <div className='column'>
                     <h1>Set <span>{props.step}</span> out of {MAX_STEP}</h1>
